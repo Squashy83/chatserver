@@ -1,0 +1,33 @@
+{
+  "name": "chatserverrepo",
+  "version": "1.0.0",
+  "description": "A broadcasting chat server",
+  "main": "app.js",
+  "scripts": {
+    "build": "rm -rf ./dist && npx tsc",
+    "start": "node ./dist/app.js",
+    "test": "jest --detectOpenHandles"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Squashy83/chatserver.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Squashy83/chatserver/issues"
+  },
+  "homepage": "https://github.com/Squashy83/chatserver#readme",
+  "dependencies": {
+    "@types/socket.io": "^2.1.4",
+    "dotenv": "^8.2.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.22",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  }
+}
