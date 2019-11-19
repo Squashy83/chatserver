@@ -1,30 +1,36 @@
 require('dotenv').config();
-let net = require('net');
+import * as net from 'net';
 
 import logger from './logger/logger';
+import { Socket } from 'net';
 
-
-let sockets: any[] = [];
+//Better use a DB
+const sockets: MySocket[] = [];
 
 let clientsCounter = 0;
 
-let server = net.createServer(
+interface MySocket extends Socket {
+	id?:string;
+	nickname?:string;
+}
+
+const server = net.createServer(
     
     // New connection callback
-    (socket:any) => {
+    (socket:MySocket) => {
 	// Increment sockets counter
 	clientsCounter++;
 	
 	socket.id = "client" + clientsCounter;
-	let clientID = socket.id;
+	const clientID = socket.id;
 
 	sockets.push(socket);
 
 	logger.info(`New user ${clientID} joined the chat`);
 
 	// A new message from the client
-	socket.on('data', function(data:any) {
-		let message = data.toString();
+	socket.on('data', function(data) {
+		const message = data.toString();
 		broadcast(clientID, message);
 
 	});
@@ -36,14 +42,14 @@ let server = net.createServer(
 	});
 
 	// When socket gets errors
-	socket.on('error', function(error:any) {
+	socket.on('error', function(error) {
         logger.error(`Socket error ${error.message}`);
 	});
 });
 
 
 // Broadcast to other clients
-function broadcast(from:any, message:any) {
+function broadcast(from:string, message:string) {
 
     // No one left in the chat
 	if (sockets.length === 0) {
@@ -63,13 +69,13 @@ function broadcast(from:any, message:any) {
 };
 
 
-function removeSocket(socket:any) {
+function removeSocket(socket:Socket) {
 	sockets.splice(sockets.indexOf(socket), 1);
 };
 
 
 // In case of server errors
-server.on('error', function(error:any) {
+server.on('error', function(error) {
     logger.info(`Error in the server`);
 });
 

@@ -13,7 +13,7 @@ beforeAll((done) => {
 });
 
 
-test('client1 send message, client2 reads same message', (done) => {
+test('client1 sends message, client2 reads same message', (done) => {
 
   const messageToShare = 'cn48r94umç°çé°°!!""8';
   
